@@ -687,7 +687,7 @@
     text-overflow: clip;
     font-size: 13px;
     line-height: 1.2;
-    margin-bottom: 15px !important;
+    margin-bottom: 15px !important;  
   }
 
   /* Fix field-arrange and small-width helpers to be fluid */
