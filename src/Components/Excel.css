@@ -1,0 +1,1264 @@
+/* ====== Global App Style ====== */
+.App {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9dbf2;
+  min-height: 100vh;
+  padding-top: 110px;
+  text-align: center;
+  color: #333;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  
+}
+
+/* ====== Navbar ====== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #B00087;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  height:68px !important;
+  width:auto; 
+  border-bottom: 2px;;
+}
+
+.navbar-logo {
+  font-size: 33px;
+  font-weight: 1000;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #B00087; /* magenta background */
+  border-radius: 30px;
+  padding: 8px 15px;
+  gap: 8px;
+  width: 650px;   /* adjust width */
+  height: 37px;   /* height like design */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border: 1.5px solid #fff; /* ✅ white border */
+  
+}
+
+
+
+
+
+/* Input field styled like placeholder text in design */
+.navbar-search input[type="search"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+  color: #fff;
+  text-align: left;
+  
+  
+}
+
+.navbar-search input::placeholder {
+  color: #fff;
+  opacity: 0.9;
+  font-weight: 500;
+  border-color: #fff;
+}
+
+
+.filter-btn {
+  padding: 8px 24px;
+  background: #f6e3f2;             /* white inside */
+  border: 2px solid #b00087;    /* magenta border */
+  color: #b00087;               /* magenta text */
+  border-radius: 25px;          /* pill/oval shape */
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  height: 45px;
+  width: 120px;
+  margin-left: 0px;
+}
+
+/* Hover effect: fill magenta with white text */
+.filter-btn:hover {
+  background: #feb3ed;
+  color: #fff;
+}
+
+
+.navbar-profile {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+
+/* ========================= Responsive mobile view========================= */
+
+@media (max-width: 1024px) {
+  .navbar-search {
+    width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+    height: auto !important;
+  }
+
+  .navbar-logo {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .navbar-search {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .navbar-search input[type="search"] {
+    font-size: 16px;
+  }
+
+  .filter-btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 8px;
+    margin-top: 5px;
+  }
+
+  .navbar-profile {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    font-size: 24px;
+  }
+
+  .navbar-search {
+    padding: 6px 10px;
+  }
+
+  .navbar-search input[type="search"] {
+    font-size: 14px;
+  }
+
+  .filter-btn {
+    font-size: 14px;
+    height: 40px;
+  }
+}
+
+/* ====== Page Heading ====== */
+h1 {
+  font-size: 28px;
+  
+  font-weight: 700;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  margin-left: 20px;
+  margin-bottom: 44px;
+}
+
+/* ====== Status Dashboard ====== */
+.status-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  margin-bottom: 40px;
+}
+
+.box {
+  flex: 1 1 220px;
+  background: #B000870D;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 20px;
+  text-align: left;
+  font-size: 19px;
+  font-weight: 600;
+  color: #444;
+  transition: transform 0.25s ease;
+  max-width: 240px;
+  border: 3px solid #f2f2f2;
+  height:100px;
+  cursor: pointer;
+
+  
+}
+
+
+
+.box:hover {
+  transform: translateY(-6px);
+}
+
+.box .count {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #111;
+}
+
+.box .trend {
+  font-size: 13px;
+  color: green;
+}
+
+/* ====== Profit Graph Button ====== */
+.graph-btn {
+  display: inline-block;
+  margin: 20px auto;
+  padding: 12px 28px;
+  border-radius: 10px;
+  background: #b00087;  
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.graph-btn:hover {
+  background: #8a006b;
+}
+
+/* ====== Upload Section ====== */
+.upload-section {
+  margin: 40px auto;
+  padding: 25px;
+  width: 90%;
+  max-width: 700px;
+  background: #fff;
+  border-radius: 12px;
+  border: 2px dashed #b00087;
+  text-align: center;
+  color: #666;
+}
+
+.upload-section p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.upload-btn {
+  margin-top: 10px;
+  padding: 12px 26px;
+  border-radius: 17px !important;
+  background: #b00087;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 155px !important;
+}
+
+.upload-btn:hover {
+  background: #8a006b;
+}
+
+/* ====== Submit + Download Buttons ====== */
+.action-buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.action-buttons button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn {
+  background: #b00087;
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background: #8a006b;
+}
+
+.download-btn {
+  background: #ff007f;
+  color: #fff;
+}
+
+.download-btn:hover {
+  background: #cc0066;
+}
+
+
+
+
+/* ====== Footer ====== */
+.footer {
+  margin-top: 50px;
+  background: #b00087;
+  padding: 25px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.footer h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.footer input[type="email"] {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  margin-right: 10px;
+}
+
+.footer button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #ff007f;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.footer button:hover {
+  background: #cc0066;
+}
+
+/* ====== Responsive mobile view ====== */
+@media (max-width: 768px) {
+  .status-boxes {
+    flex-direction: column;
+    align-items: center;
+  }
+  .box {
+    max-width: 90%;
+  }
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .navbar-search {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .navbar-search input {
+    width: 100%;
+  }
+  .filter-btn {
+    width: 100%;
+  }
+}
+
+
+.dashboard-container{
+  background-color: #f9dbf2;
+  padding-top: -10px;
+} 
+
+.search{
+  font-size: 30px;
+  color: white;
+}
+
+
+
+
+.logo {
+   height: 50px;
+   width: 50px;
+   padding: 8px;
+   margin: 4px;
+   margin-bottom: -12px;
+  
+}
+
+
+/* Heading text */
+.heading1 {
+  color: white;
+  text-decoration: none;
+  font-size: 33px;
+  font-weight: 400;
+  
+}
+
+
+
+.box-logo{
+  height: 45px;
+  width:50px;
+  padding: 4px;
+  margin: 2px;
+  display: flex;
+  justify-content: flex-end;
+  
+  
+}
+
+.adjust-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #EFCCE7;   /* light pink background */
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  height: 140px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+}
+
+/* Left side text */
+.box-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.box .title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.box .value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+  margin-top: 6px;
+}
+
+/* Right side logo */
+.background-logo {
+  background: rgba(255, 255, 255, 0.4);
+  padding: 18px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.upload-container {
+  background: #f7cfe0;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 450px;
+  margin: auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.upload-container h3 {
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.upload-section {
+  border: 2px dashed #d63384;
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 15px;
+  background: #f7cfe0;
+  position: relative;
+}
+
+.upload-section input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+.upload-box {
+  color: #444;
+}
+
+.cloud-icon {
+  font-size: 40px;
+  color: #d63384;
+  display: block;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+  width: 130px;
+}
+
+.browse {
+  display: block;
+  margin-top: 5px;
+  color: #d63384;
+  cursor: pointer;
+}
+
+.filename {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.upload-btn {
+  background: #d63384;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-right: -520px;
+}
+
+.upload-btn:hover {
+  background: #f757a4;
+}
+
+.drag-active {
+  background-color: #fddde6;
+}
+
+
+.graph-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.graph-title {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #d63384; /* pink heading */
+}
+
+/* Tooltip style (override inline if needed) */
+.recharts-tooltip-wrapper {
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+/* Line dots hollow style */
+.recharts-line-dot {
+  fill: #fff !important;       /* white center */
+  stroke: #d63384 !important;  /* pink border */
+  stroke-width: 2px !important;
+}
+
+/* Active dot (when hover) */
+.recharts-active-dot {
+  r: 8 !important; /* slightly bigger */
+  fill: #d63384 !important;
+}
+
+/* Axis text style */
+.recharts-cartesian-axis-tick text {
+  font-size: 12px;
+  fill: #333;
+}
+
+/* Grid line style */
+.recharts-cartesian-grid line {
+  stroke: #ccc;
+  stroke-dasharray: 0; /* solid lines */
+}
+
+.upload-btn {
+  /* For gradient background */
+  background: linear-gradient(90deg, #B00087, #E8AED9);
+  
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px; /* lowercase 'r' in CSS */
+  cursor: pointer;
+  font-size: 14px;    /* use hyphenated CSS property */
+  margin-right: 13px !important;
+}
+
+.upload-btn:hover {
+  background: linear-gradient(90deg, #E8AED9, #B00087);
+
+  box-shadow: 0px 6px 12px rgba(176, 0, 135, 0.5);
+}
+
+.graph-container {
+  background: linear-gradient(135deg, #E8AED9 0%, #B00087 100%);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  margin-top: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.graph-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.graph-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Customize chart grid */
+.recharts-cartesian-grid line {
+  stroke: rgba(255, 255, 255, 0.4);
+}
+
+/* Customize X and Y axis */
+.recharts-x-axis .recharts-cartesian-axis-tick-value,
+.recharts-y-axis .recharts-cartesian-axis-tick-value {
+  fill: #fff !important;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Tooltip box */
+.recharts-tooltip-wrapper {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Button styling */
+.graph-toggle-btn {
+  background: linear-gradient(90deg, #B00087, #E8AED9);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(176, 0, 135, 0.3);
+}
+
+.graph-toggle-btn:hover {
+  background: linear-gradient(90deg, #E8AED9, #B00087);
+  box-shadow: 0px 6px 12px rgba(176, 0, 135, 0.5);
+}
+
+.graph-container {
+  background: linear-gradient(180deg, #E8AED9 0%, #B00087 100%);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+.graph-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+.background-logo{
+  height: 63px;
+ 
+  background-color:#B0008733;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.box-symbol{
+  height: 55px;
+  width: 55px;
+}
+
+.box-img{
+  height: 65px;
+  width: 65px;
+}
+
+.shivay{
+  height: 40px;
+  width: 40px;
+}
+
+.logo-heading {
+  display: flex;
+  align-items: center; /* vertically center image + text */
+  gap: 10px; /* space between image and text */
+}
+
+.shivay {
+  height: 30px; /* adjust logo size */
+  width: 30px;
+}
+
+.heading1 {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 17px;
+  margin-left: 4px;
+}
+
+.drag{
+  color:#666 ; 
+  font-size: 20px;
+  font-weight: 620;
+}
+
+.drop{
+  color:#B00087;
+  font-size: 20px;
+  font-weight: 620;
+
+}
+
+.head{
+  color: #666;
+  font-weight: 600;
+}
+
+
+.footer{
+    background-color: #B00087;
+    height:2000px;
+    width: auto;
+    
+}
+
+.square-box{
+  border: 4px solid white;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 720px;
+  margin: auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.footer-btn {
+  padding: 8px 16px;
+  background-color: #EFCCE7 !important;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  margin-right: -10px;
+  color: #b00087 !important;
+}
+
+
+/* Container for logo and heading */
+.logo-heading {
+  position: relative;      /* Needed for dropdown positioning */
+  display: inline-block;   /* Shrinks to content size */
+  cursor: pointer;         /* Pointer on hover */
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Logo + Heading aligned in one line */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;               /* Space between logo and heading */
+}
+
+/* Logo image */
+.shivay {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;      /* Optional: makes it round */
+}
+
+/* Heading text */
+.heading1 {
+  font-size: 24px;
+  color: white;
+  margin: 0;
+  user-select: none;       /* Prevent text selection */
+}
+
+/* Dropdown menu */
+.dropdown {
+  position: absolute;      /* Relative to .logo-heading */
+  top: 50px;               /* Below the logo/heading */
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 120px;            /* Adjust as needed */
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-in-out; /* Smooth appear */
+}
+
+/* Dropdown items */
+.dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+/* Hover effect */
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Optional fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.forgot-link{
+  color:#B00087 !important;
+}
+
+.forgot{
+  color:#B00087 !important;
+
+}
+
+
+/* Overlay with blur effect */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Modal box with glassmorphism */
+.modal-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px 35px;
+  border-radius: 16px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  position: relative;
+  animation: slideIn 0.35s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Title */
+.modal-box .forgot {
+  margin-bottom: 18px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 0.5px;
+}
+
+/* Label */
+.modal-box label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #444;
+  text-align: left;
+}
+
+/* Input field */
+.modal-box input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 20px;
+  background: #f9f9f9;
+  transition: all 0.25s ease-in-out;
+}
+
+.modal-box input:focus {
+  border-color: #6a11cb;
+  box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
+  background: #fff;
+}
+
+/* Primary gradient button */
+.btn-primary {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 12px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 117, 252, 0.4);
+}
+
+/* Close button styled */
+.close-btn {
+  width: 100%;
+  padding: 10px 16px;
+  background: #f3f3f3;
+  color: #333;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.close-btn:hover {
+  background: #e5e5e5;
+  color: #111;
+}
+
+/* Slide animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-25px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.star{
+  color: red !important;
+  font-size: 18px;
+}
+
+/* media query for tablet screens */
+/* there is navbar only*/
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navbar {
+    flex-wrap: wrap;
+    padding: 10px 20px;
+  }
+
+  .navbar-logo {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .navbar-search {
+    width: 80%;
+    height: 36px;
+    margin: 0 auto;
+  }
+
+  .navbar-search input[type="search"] {
+    font-size: 16px;
+  }
+
+  .filter-btn {
+    font-size: 16px;
+    padding: 6px 20px;
+    width: 110px;
+    height: 40px;
+  }
+
+  .navbar-profile {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 1024px) {
+
+  h1 {
+    font-size: 24px;
+    margin-left: 15px;
+    margin-bottom: 30px;
+  }
+
+  .status-boxes {
+    gap: 15px;
+    padding: 0 15px;
+  }
+
+  .box {
+    flex: 1 1 45%;
+    max-width: 45%;
+    height: 90px;
+    font-size: 17px;
+    padding: 18px;
+  }
+
+  .box .count {
+    font-size: 22px;
+  }
+
+  .graph-btn {
+    padding: 10px 24px;
+    font-size: 13px;
+  }
+
+  .upload-section {
+    width: 95%;
+    padding: 20px;
+    max-width: 600px;
+  }
+
+  .upload-section p {
+    font-size: 13px;
+  }
+
+  .upload-btn {
+    width: 140px !important;
+    font-size: 13px;
+  }
+
+  .action-buttons {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .action-buttons button {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .footer {
+    padding: 20px;
+  }
+
+  .footer h3 {
+    font-size: 15px;
+  }
+
+  .footer input[type="email"] {
+    width: 60%;
+    margin-bottom: 10px;
+  }
+
+  .footer button {
+    width: auto;
+    font-size: 13px;
+    padding: 9px 16px;
+  }
+}
+
+/* Media query for tablets (600px to 1024px) */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Fix invalid negative padding and tighten header */
+  .dashboard-container {
+    background-color: #f9dbf2;
+    padding-top: 10px; /* replaced invalid -10px */
+  }
+
+  /* Header / logo area */
+  .logo {
+    height: 44px;
+    width: 44px;
+    padding: 6px;
+    margin-bottom: -8px;
+  }
+
+  .heading1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    margin-left: 6px;
+  }
+
+  .logo-heading { gap: 8px; }
+
+  /* Search size */
+  .search { font-size: 24px; }
+
+  /* Boxes: stack a bit tighter, allow wrap */
+  .box {
+    width: calc(50% - 20px); /* two per row */
+    height: 120px;
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .box .title { font-size: 16px; }
+  .box .value { font-size: 26px; }
+
+  .background-logo {
+    padding: 14px;
+    width: 56px;
+    height: 56px;
+    background-color: rgba(176, 0, 135, 0.2);
+  }
+
+  .box-logo, .box-img, .box-symbol {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Upload area: reduce widths and margins */
+  .upload-container {
+    max-width: 420px;
+    padding: 18px;
+  }
+
+  .upload-section {
+    padding: 20px;
+  }
+
+  .cloud-icon {
+    font-size: 36px;
+    width: 110px;
+    height: 88px;
+  }
+
+  .upload-btn {
+    padding: 10px 18px;
+    font-size: 14px;
+    margin-right: 0 !important; /* remove the huge negative offset on tablets */
+    border-radius: 10px;
+  }
+
+  .filename { font-size: 13px; }
+
+  /* Graph area: narrower and slightly smaller text */
+  .graph-container {
+    max-width: 720px;
+    margin: 20px auto;
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .graph-title {
+    font-size: 20px;
+  }
+
+  .graph-toggle-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  /* Typography adjustments */
+  .drag, .drop {
+    font-size: 18px;
+  }
+
+  .head {
+    font-size: 15px;
+  }
+
+  /* Footer compress */
+  .footer {
+    height: 900px; /* reduce huge desktop height for tablet */
+  }
+
+  .square-box {
+    max-width: 640px;
+    padding: 18px;
+  }
+
+  .footer-btn {
+    width: 110px;
+    height: 38px;
+    margin-right: 0;
+  }
+
+  /* Dropdown adjustments (if using dropdown on small tablets) */
+  .dropdown {
+    top: 46px;
+    width: 140px;
+  }
+
+  /* Make sure items wrap gracefully */
+  .adjust-box, .logo-container {
+    flex-wrap: wrap;
+  }
+
+  /* Ensure charts and reagions scale */
+  .recharts-cartesian-axis-tick text,
+  .recharts-x-axis .recharts-cartesian-axis-tick-value,
+  .recharts-y-axis .recharts-cartesian-axis-tick-value {
+    font-size: 12px !important;
+  }
+}
+
