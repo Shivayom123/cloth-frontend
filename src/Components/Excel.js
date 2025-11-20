@@ -61,7 +61,7 @@ e.preventDefault();
 
   try {
     const res = await axios.post(
-      "https://product-backend-2-6atb.onrender.com/login",
+      "https://cloth-backend-yhka.onrender.com/login",
       {
         email: formData.email.trim().toLowerCase(), // match backend
         password: formData.password,
@@ -105,7 +105,7 @@ e.preventDefault();
       }
 
       const res = await axios.post(
-        "https://product-backend-2-6atb.onrender.com/forgot-password",
+        "https://cloth-backend-yhka.onrender.com/forgot-password",
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -128,7 +128,7 @@ e.preventDefault();
       if (!resetOtp) return alert("Please enter OTP");
 
       const res = await axios.post(
-        "https://product-backend-2-6atb.onrender.com/verify-otp",
+        "https://cloth-backend-yhka.onrender.com/verify-otp",
         { otp: resetOtp.toString() },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -172,7 +172,7 @@ e.preventDefault();
       }
 
       const res = await axios.post(
-        "https://product-backend-2-6atb.onrender.com/reset-password",
+        "https://cloth-backend-yhka.onrender.com/reset-password",
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -208,7 +208,7 @@ e.preventDefault();
   const handleResend = async () => {
     try {
       const res = await axios.post(
-        "https://product-backend-2-6atb.onrender.com/resend-otp",
+        "https://cloth-backend-yhka.onrender.com/resend-otp",
         { value: forgotValue }
       );
 
@@ -579,7 +579,7 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        "https://product-backend-2-6atb.onrender.com/signup",
+        "https://cloth-backend-yhka.onrender.com/signup",
         payload
       );
 
@@ -932,7 +932,7 @@ function Dashboard() {
   }, []);
 
   const handleDownload = () => {
-    fetch("https://product-backend-2-6atb.onrender.com/download-pdf", {
+    fetch("https://cloth-backend-yhka.onrender.com/download-pdf", {
       method: "GET",
       headers: { Accept: "application/pdf" },
     })
@@ -1000,7 +1000,7 @@ function Dashboard() {
     }
     try {
       const res = await axios.get(
-        `https://product-backend-2-6atb.onrender.com/filter/${subOrderNo}`
+        `https://cloth-backend-yhka.onrender.com/filter/${subOrderNo}`
       );
       setFilterResult(res.data);
       const calcProfit = 500 - res.data.discountedPrice;
@@ -1023,7 +1023,7 @@ function Dashboard() {
       formDataObj.append("file", file);
 
       const uploadRes = await axios.post(
-        "https://product-backend-2-6atb.onrender.com/upload",
+        "https://cloth-backend-yhka.onrender.com/upload",
         formDataObj,
         {
           headers: { "Content-Type": "multipart/form-data" },
