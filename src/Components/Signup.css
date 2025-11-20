@@ -567,141 +567,174 @@
     opacity: 0;
     transform: translate(-50%, -20px);
   }
-}
-/* ================= Tablet view (768px - 1024px) ================= */
-@media (min-width: 768px) and (max-width: 1024px) {
+}  
 
-  /* container: make responsive and stack vertically for tablets */
+/* this is tablet view */
+@media (min-width: 768px) and (max-width: 991px) {
+   
   .signup-box {
-    display: flex;
-    flex-direction: column;          /* stack left panel above form for reliable layout */
-    width: 90% !important;
-    max-width: 760px;
-    height: auto;                    /* let content determine height */
-    border-radius: 15px;
-    overflow: hidden;                /* avoid weird scrollbars */
-    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
-    background: #f9dbf2 !important;
-    margin: 20px auto;
-    padding: 0;
-    box-sizing: border-box;
+    flex-direction: column;
+    width: 95%;
+    max-width: 100%;
+    margin: 16px auto;
+    border-radius: 12px;
+    overflow-y: visible;
+    overflow-x: hidden;
   }
 
-  /* left pink panel appears as a real header (was ::before) */
+  /* header */
   .signup-box::before {
     content: "Meesho";
-    display: flex;
-    width: 100%;
     flex: none;
-    background: #b00087;
+    width: 100%;
+    font-size: 26px;
+    font-weight: bold;
     color: #fff;
-    height: 140px;                   /* shorter header for tablets */
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 16px 20px;
-    box-sizing: border-box;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    background: #b00087;
+    padding: 18px 0;
+    text-align: center;
+    border-radius: 12px 12px 0 0;
+    height:40px;
+
   }
 
-  /* right form section adjusts under the header */
-  .signup-form,
-  .otp-box {
-    flex: none;
-    width: 100%;
-    background: #f9dbf2 !important;
-    padding: 22px 26px;              /* reduced padding for tablet */
-    box-sizing: border-box;
-  }
-
-  /* Form becomes a single column for touch usability */
+  /* two equal columns layout */
   .signup-form {
     display: grid;
-    grid-template-columns: 1fr;      /* single column */
-    gap: 12px;                       /* tightened gaps */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 20px; /* horizontal & vertical spacing between inputs */
+    padding: 18px;
+    align-items: start;
+    background-color: #ffe6f0;
+    height:150px;
   }
 
-  /* Make labels and inputs slightly smaller for tablet */
-  .field label { font-size: 13px; color: rgb(95,95,95); }
+  /* fields that should take full width (like email, submit, checkbox) */
+  .field.full {
+    grid-column: 1 / -1;
+  }
+
+  /* label style */
+  .field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* input boxes fill width nicely */
   .field input,
   .input-part,
   .input-part2,
-  .input-design,
-  .input-design2 {
+  .otp-box input,
+  .password-wrapper input {
     width: 100% !important;
-    max-width: 100%;
+    box-sizing: border-box;
     padding: 10px 14px;
-    font-size: 15px;
-    border-radius: 25px;
-    box-sizing: border-box;
+    border-radius: 22px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #fff;
   }
 
-  /* Make confirm password occupy full width */
-  .field.full { grid-column: 1 / -1; }
-
-  /* Password wrapper + eye icons inside input */
-  .password-wrapper { position: relative; width: 100%; }
-  .password-wrapper input { padding-right: 46px; } /* room for icon */
-  .eye-icon, .eye-icon2 {
-    position: absolute;
-    right: 12px;                      /* sits inside input on right */
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #b00087;
-    font-size: 18px;
-    line-height: 1;
-    user-select: none;
-  }
-
-  /* Buttons: full width and comfortable touch size */
-  .btn-primary {
-    width: 100%;
-    padding: 12px;
-    border-radius: 25px;
-    font-size: 16px;
-    grid-column: 1 / -1;
-    margin-top: 8px !important;
-  }
-
-  /* Terms: center, wrap text and allow multi-line - prevents pushing layout */
-  .terms {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    padding: 8px 6px;
-    box-sizing: border-box;
-    white-space: normal;
-    flex-wrap: wrap;
-  }
-  .terms input[type="checkbox"] { width: 18px; height: 18px; margin: 0; }
-  .terms label, .terms p {
-    display: inline-block;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    font-size: 13px;
-    line-height: 1.2;
-    margin-bottom: 15px !important;  
-  }
-
-  /* Fix field-arrange and small-width helpers to be fluid */
-  .field-arrange { display: flex; flex-direction: column; gap: 10px; }
-  .width, .setting1, .setting2, .input-design, .input-design2,
-  .input-part, .input-part2 { width: 100% !important; max-width: 100%; margin-left: 0 !important; }
-
-  /* Remove any leftover negative margins that cause misalignment */
-  .length { margin-left: 0; }
-  .signup-box p { margin-top: 12px; }
-
-  /* OTP adjustments */
-  .otp-box input { width: 86%; max-width: 420px; }
-
-  /* Ensure no child creates horizontal scroll */
-  .signup-box * { box-sizing: border-box; }
+  /* fix narrow elements */
+ .width,
+.input-part,
+.input-part2 {
+  width: 100% !important;
+  min-width: 0;
 }
+
+/* give slight horizontal spacing only to .input-part2 */
+.input-part2 {
+  margin-left: 8px; /* small gap between two inputs */
+}
+
+
+/* eye icons position correctly */
+/* eye icons */
+.eye-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* move confirm password eye slightly inward */
+.eye-icon2 {
+  position: absolute;
+  right: 28px; /* moved a bit left (from 14px → 28px) */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+  /* make sure password wrapper is positioned relative */
+  .password-wrapper {
+    position: relative;
+  }
+
+  /* submit button full width */
+  .btn-primary {
+    grid-column: 1 / -1;
+    padding: 12px;
+    border-radius: 28px;
+    background-color: #b00087;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+  }
+
+  /* terms & conditions */
+  .signup-box p {
+    grid-column: 1 / -1;
+    padding: 4px 6px;
+    font-size: 13px;
+  }
+
+  .terms label,
+  .terms p {
+    font-size: 13px;
+  }
+
+  /* OTP area spacing (if used) */
+  .otp-box {
+    grid-column: 1 / -1;
+    padding: 12px 18px;
+  }
+
+  /* heading size */
+  .signup-box h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .gstamg{
+  margin-top: 1px !important;
+ 
+}
+
+.emailamg{
+  margin-top: -12px !important;
+
+}
+
+.confirm-pass{
+  font-size: 13px !important;
+  margin-top: 19px !important;
+}
+
+
+
+.warning{
+  margin-top: -30px !important  ;
+}
+
+.account{
+  margin-top: -30px !important;
+}
+}
+
+
