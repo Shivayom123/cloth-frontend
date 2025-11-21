@@ -316,8 +316,15 @@
   color:red;
 }
 
+.password-mange{
+  margin-top: -3px !important;
+
+}
+
 /* ===== Mobile: two equal columns with full-width inputs ===== */
-@media (max-width: 480px) {
+
+/* ===== Mobile: two equal columns with full-width inputs ===== */
+@media (max-width: 600px) {
 
   /* keep the main box stacked but allow a two-column form */
   .signup-box {
@@ -466,10 +473,14 @@
 
 .emailamg{
   margin-top: -12px !important;
+  width:385px !important;
 
 }
 
-
+.confirm-pass{
+  font-size: 13px !important;
+  margin-top: 19px !important;
+}
 
 
 
@@ -485,6 +496,7 @@
 }
 
 
+
 .input-error::placeholder {
   color: red !important;
   opacity: 0.9; /* makes red color more visible */
@@ -498,6 +510,7 @@
 
 .emailamg{
   margin-top: -12px !important;
+  width:240px;
 
 }
 
@@ -506,7 +519,7 @@
 }
 
 .password-mange{
-  margin-top: -3px !important;
+  margin-top: 19px !important;
 
 }
 
