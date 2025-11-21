@@ -731,6 +731,7 @@ function Signup() {
 
           {/* Phone */}
           <div className="field half" style={inputContainerStyle}>
+            <div className="phone-mange">
             <label>
               Phone<span className="spd">*</span>
             </label>
@@ -743,6 +744,7 @@ function Signup() {
               onChange={handleChange}
             />
             {fieldPopups.phone && <div style={popupStyle}>{fieldPopups.phone}</div>}
+          </div>
           </div>
 
           {/* GST */}
@@ -765,6 +767,7 @@ function Signup() {
 
           {/* City */}
           <div className="field half" style={inputContainerStyle}>
+            <div className="city-mange">
             <label>
               City<span className="spd">*</span>
             </label>
@@ -778,9 +781,11 @@ function Signup() {
             />
             {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
           </div>
+          </div>
 
           {/* State */}
           <div className="field half length" style={inputContainerStyle}>
+            <div className="state-mange">
             <label>
               State<span className="spd">*</span>
             </label>
@@ -793,6 +798,7 @@ function Signup() {
               onChange={handleChange}
             />
             {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
+          </div>
           </div>
 
           {/* Password */}
