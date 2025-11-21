@@ -317,7 +317,7 @@
 }
 
 /* ===== Mobile: two equal columns with full-width inputs ===== */
-@media (max-width: 600px) {
+@media (max-width: 480px) {
 
   /* keep the main box stacked but allow a two-column form */
   .signup-box {
@@ -469,10 +469,7 @@
 
 }
 
-.confirm-pass{
-  font-size: 13px !important;
-  margin-top: 19px !important;
-}
+
 
 
 
@@ -509,7 +506,7 @@
 }
 
 .password-mange{
-  margin-top: 17px !important;
+  margin-top: -3px !important;
 
 }
 
