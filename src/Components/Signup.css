@@ -724,7 +724,12 @@
 
 .confirm-pass{
   font-size: 13px !important;
-  margin-top: 19px !important;
+  margin-top: -15px !important;
+}
+
+.password-mange{
+  margin-top: -15px !important;
+
 }
 
 
