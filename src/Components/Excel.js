@@ -24,7 +24,9 @@ import "./Signup.css";
 
 
 function Login() {
-  const [mode] = useState("login"); // login | signup (kept constant as before)
+  const navigate = useNavigate();
+
+  const [mode] = useState("login");
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -37,15 +39,13 @@ function Login() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // FIXED loading state
   const [loading, setLoading] = useState(false);
-
-  const [step, setStep] = useState(null); // null: no modal, 0: forgot, 1: otp, 2: reset
+  const [step, setStep] = useState(null); // 0: forgot, 1: otp, 2: reset
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // ====== LOGIN ======
+  // ===== LOGIN =====
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -56,7 +56,7 @@ function Login() {
         password: formData.password,
       };
 
-      console.log("Login payload:", payload);
+      console.log("Login Payload:", payload);
 
       const res = await axios.post(
         "https://cloth-backend-yhka.onrender.com/login",
@@ -64,29 +64,31 @@ function Login() {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      console.log("Login response:", res?.data);
+      console.log("Login Response:", res.data);
 
-      if (res.data?.success) {
+      if (res.data.success) {
         alert("Login successful!");
-        if (res.data.token) localStorage.setItem("token", res.data.token);
-        // navigate(...) if using react-router
+
+        if (res.data.token) {
+          localStorage.setItem("token", res.data.token);
+        }
+
+        // ⬅ Redirect to Dashboard
+        navigate("/dashboard");
+
       } else {
-        // show server message or generic
-        alert(res.data?.message || "Invalid credentials / user not found");
+        alert(res.data.message || "Invalid credentials");
       }
     } catch (err) {
-      console.error("Full error object:", err);
-      console.error("Server response (if any):", err?.response);
-      const serverMsg =
-        err?.response?.data?.message ||
-        err?.response?.data?.error ||
-        err?.message ||
-        "Network/server error";
-      alert(serverMsg);
+      console.log("Login error:", err?.response || err);
+      const msg =
+        err?.response?.data?.message || "Something went wrong. Try again!";
+      alert(msg);
     } finally {
       setLoading(false);
     }
   };
+
 
   // === Forgot password ===
   const handleForgotPassword = async () => {
