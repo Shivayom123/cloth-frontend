@@ -489,7 +489,7 @@ function Signup() {
 
     // phone: exactly 10 digits
     const phone = formData.phone.trim();
-    const phoneRe = /^\d{10}$/;
+    const phoneRe = /^\d{13}$/;
     if (!phone) {
       errors.phone = "10 digit phone required";
     } else if (!phoneRe.test(phone)) {
