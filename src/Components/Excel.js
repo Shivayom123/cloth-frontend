@@ -488,13 +488,19 @@ function Signup() {
     }
 
     // phone: exactly 10 digits
-    const phone = formData.phone.trim();
-    const phoneRe = /^\d{13}$/;
-    if (!phone) {
-      errors.phone = "10 digit phone required";
-    } else if (!phoneRe.test(phone)) {
-      errors.phone = "Phone must be exactly 10 digits";
-    }
+let phone = formData.phone.trim();
+
+// Regex:
+// 1️⃣   Exactly 10 digits  →  /^[0-9]{10}$/
+// 2️⃣   +91 + 10 digits    →  /^\+91[0-9]{10}$/
+const phoneRe = /^(\+91[0-9]{10}|[0-9]{10})$/;
+
+if (!phone) {
+  errors.phone = "add +91 Phone number required";
+} else if (!phoneRe.test(phone)) {
+  errors.phone = "Enter 10 digits or +91 + 10 digits";
+}
+
 
     // gst: exactly 8 digits (per your requirement). adjust if needed.
     const gst = formData.gst.trim();
