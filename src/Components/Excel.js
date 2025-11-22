@@ -24,19 +24,8 @@ import "./Signup.css";
 
 
 function Login() {
-  const [mode] = useState("login"); // login | signup
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    gst: "",
-    city: "",
-    country: "",
-    confirmPassword: "",
-  });
-
+  const [mode] = useState("login"); // login | signup (kept constant as before)
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
   // Forgot password states
@@ -47,47 +36,57 @@ function Login() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [setLoading] = useState(false);
-  const [step, setStep] = useState(null); 
-  
-  // null: no modal, 0: forgot form, 1: otp, 2: reset password
+
+  // FIXED loading state
+  const [loading, setLoading] = useState(false);
+
+  const [step, setStep] = useState(null); // null: no modal, 0: forgot, 1: otp, 2: reset
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   // ====== LOGIN ======
-const handleSubmit = async (e) => {
-e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
 
-  try {
-    const res = await axios.post(
-      "https://cloth-backend-yhka.onrender.com/login",
-      {
-        email: formData.email.trim().toLowerCase(), // match backend
+      const payload = {
+        email: formData.email.trim().toLowerCase(),
         password: formData.password,
+      };
+
+      console.log("Login payload:", payload);
+
+      const res = await axios.post(
+        "https://cloth-backend-yhka.onrender.com/login",
+        payload,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      console.log("Login response:", res?.data);
+
+      if (res.data?.success) {
+        alert("Login successful!");
+        if (res.data.token) localStorage.setItem("token", res.data.token);
+        // navigate(...) if using react-router
+      } else {
+        // show server message or generic
+        alert(res.data?.message || "Invalid credentials / user not found");
       }
-    );
-
-    if (res.data.success) {
-      alert("Login successful!");
-      localStorage.setItem("token", res.data.token); // optional: save JWT
-      // Navigation handled elsewhere (e.g., react-router's navigate)
-    } else {
-      alert(res.data.message || "Invalid credentials");
+    } catch (err) {
+      console.error("Full error object:", err);
+      console.error("Server response (if any):", err?.response);
+      const serverMsg =
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        err?.message ||
+        "Network/server error";
+      alert(serverMsg);
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error("Full error:", err);
-
-    if (err.response && err.response.data) {
-      alert(err.response.data.message || "Server responded with an error");
-    } else {
-      alert("Network/server error. Please try again later.");
-    }
-  }
-};
-
-
-
+  };
 
   // === Forgot password ===
   const handleForgotPassword = async () => {
@@ -97,12 +96,12 @@ e.preventDefault();
     }
 
     try {
-      let payload = {};
-      if (forgotValue.includes("@")) {
-        payload = { email: forgotValue };
-      } else {
-        payload = { mobileNumber: forgotValue };
-      }
+      setLoading(true);
+      const payload = forgotValue.includes("@")
+        ? { email: forgotValue.trim().toLowerCase() }
+        : { mobileNumber: forgotValue.trim() };
+
+      console.log("Forgot payload:", payload);
 
       const res = await axios.post(
         "https://cloth-backend-yhka.onrender.com/forgot-password",
@@ -110,66 +109,70 @@ e.preventDefault();
         { headers: { "Content-Type": "application/json" } }
       );
 
-      if (res.data.success) {
+      console.log("Forgot response:", res?.data);
+
+      if (res.data?.success) {
         alert("OTP sent successfully!");
-        setStep(1); // move to OTP modal
+        setStep(1);
       } else {
-        alert(res.data.message || "Reset failed");
+        alert(res.data?.message || "Reset failed");
       }
     } catch (err) {
-      console.error("Forgot password error:", err.response?.data || err.message);
-      alert(err.response?.data?.message || "Server error");
+      console.error("Forgot password error:", err?.response || err);
+      alert(err?.response?.data?.message || "Server error");
+    } finally {
+      setLoading(false);
     }
   };
 
   // ====== Verify OTP ======
   const handleVerifyOtp = async () => {
-    try {
-      if (!resetOtp) return alert("Please enter OTP");
+    if (!resetOtp || resetOtp.trim() === "") return alert("Please enter OTP");
 
+    try {
+      setLoading(true);
       const res = await axios.post(
         "https://cloth-backend-yhka.onrender.com/verify-otp",
-        { otp: resetOtp.toString() },
+        { otp: resetOtp.toString().trim() },
         { headers: { "Content-Type": "application/json" } }
       );
 
-      if (res.data.success) {
+      console.log("Verify OTP response:", res?.data);
+
+      if (res.data?.success) {
         alert("OTP verified successfully!");
-        setStep(2); // Move to reset password modal
+        setStep(2);
       } else {
-        alert(res.data.message);
+        alert(res.data?.message || "Invalid OTP");
       }
-    } catch (error) {
-      console.error(error.response?.data || error.message);
-      alert("Error verifying OTP");
+    } catch (err) {
+      console.error("OTP verify error:", err?.response || err);
+      alert(err?.response?.data?.message || "Error verifying OTP");
+    } finally {
+      setLoading(false);
     }
   };
 
   // ====== Reset Password ======
-  
-    const handleResetPassword = async (e) => {
+  const handleResetPassword = async (e) => {
     if (e) e.preventDefault();
 
     try {
-      // ✅ Validation
       if (!newPassword || !confirmPassword)
         return alert("Please fill both password fields");
-      if (newPassword !== confirmPassword)
-        return alert("Passwords do not match");
+      if (newPassword !== confirmPassword) return alert("Passwords do not match");
 
       setLoading(true);
 
-      // Build payload dynamically (only include fields that exist)
       const payload = { newPassword, confirmPassword };
-
-      // include otp if we have one (some backends expect it)
       if (resetOtp) payload.otp = resetOtp;
-
-      // include identifier if provided (some backends require email/mobile in reset)
       if (forgotValue) {
-        if (forgotValue.includes("@")) payload.email = forgotValue.trim().toLowerCase();
+        if (forgotValue.includes("@"))
+          payload.email = forgotValue.trim().toLowerCase();
         else payload.mobileNumber = forgotValue.trim();
       }
+
+      console.log("Reset payload:", payload);
 
       const res = await axios.post(
         "https://cloth-backend-yhka.onrender.com/reset-password",
@@ -177,9 +180,10 @@ e.preventDefault();
         { headers: { "Content-Type": "application/json" } }
       );
 
+      console.log("Reset response:", res?.data);
+
       if (res.data?.success) {
         alert(res.data.message || "Password reset successful!");
-        // reset state
         setStep(null);
         setNewPassword("");
         setConfirmPassword("");
@@ -187,18 +191,14 @@ e.preventDefault();
         setForgotValue("");
         setShowSuccessModal(true);
       } else {
-        // backend returned success:false
         alert(res.data?.message || "Unable to reset password.");
       }
-    } catch (error) {
-      // show server-provided error message when available
-      console.error("Reset error:", error.response?.data || error.message);
-      const serverMessage =
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
-        "Error resetting password";
-      alert("Error resetting password: " + serverMessage);
+    } catch (err) {
+      console.error("Reset error:", err?.response || err);
+      alert(
+        "Error resetting password: " +
+          (err?.response?.data?.message || err?.message || "Server error")
+      );
     } finally {
       setLoading(false);
     }
@@ -207,19 +207,19 @@ e.preventDefault();
   // ====== Resend OTP ======
   const handleResend = async () => {
     try {
+      setLoading(true);
       const res = await axios.post(
         "https://cloth-backend-yhka.onrender.com/resend-otp",
         { value: forgotValue }
       );
-
-      if (res.data.success) {
-        alert("OTP resent successfully");
-      } else {
-        alert(res.data.message || "Failed to resend OTP");
-      }
+      console.log("Resend response:", res?.data);
+      if (res.data?.success) alert("OTP resent successfully");
+      else alert(res.data?.message || "Failed to resend OTP");
     } catch (err) {
-      console.error(err);
+      console.error("Resend error:", err?.response || err);
       alert("Server error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -238,7 +238,6 @@ e.preventDefault();
                 <input
                   name="email"
                   type="email"
-                  
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -251,7 +250,6 @@ e.preventDefault();
                     className="input-design"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    
                     value={formData.password}
                     onChange={handleChange}
                     required
@@ -261,24 +259,24 @@ e.preventDefault();
                     className="eye-btn"
                     onClick={() => setShowPassword((s) => !s)}
                   >
-                    
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
                 </div>
               </div>
-              <p className="forgot-link">
-               <button
-               type="button"
-               onClick={() => setStep(0)} // open forgot modal
-               className="forgot-link"
-                  >
-                Forgot Password?
-               </button>
 
+              <p className="forgot-link">
+                <button
+                  type="button"
+                  onClick={() => setStep(0)}
+                  className="forgot-link"
+                >
+                  Forgot Password?
+                </button>
               </p>
+
               <div className="field full">
-                <button type="submit" className="btn-primary">
-                  Next
+                <button type="submit" className="btn-primary" disabled={loading}>
+                  {loading ? "Please wait..." : "Next"}
                 </button>
               </div>
             </form>
@@ -286,7 +284,7 @@ e.preventDefault();
         </div>
       </div>
 
-      {/* STEP 0: Forgot Password Modal */}
+      {/* (forgot/otp/reset/success modals unchanged) */}
       {step === 0 && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -298,7 +296,7 @@ e.preventDefault();
               value={forgotValue}
               onChange={(e) => setForgotValue(e.target.value)}
             />
-            <button className="btn-primary" onClick={handleForgotPassword}>
+            <button className="btn-primary" onClick={handleForgotPassword} disabled={loading}>
               Send OTP
             </button>
             <button className="close-btn" onClick={() => setStep(null)}>
@@ -308,7 +306,6 @@ e.preventDefault();
         </div>
       )}
 
-      {/* STEP 1: Enter OTP Modal */}
       {step === 1 && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -319,29 +316,23 @@ e.preventDefault();
               value={resetOtp}
               onChange={(e) => setResetOtp(e.target.value)}
             />
-            <button className="btn-primary" onClick={handleVerifyOtp}>
+            <button className="btn-primary" onClick={handleVerifyOtp} disabled={loading}>
               Verify OTP
             </button>
             <p className="resend-text">
               Didn't get OTP?{" "}
-              <button
-               type="button"
-               onClick={handleResend}
-               className="resend-link"
-              >
+              <button type="button" onClick={handleResend} className="resend-link" disabled={loading}>
                 Resend
-               </button>
-
+              </button>
             </p>
           </div>
         </div>
       )}
 
-      {/* STEP 2: Reset Password Modal */}
       {step === 2 && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <h3  className="forgot">Reset Password</h3>
+            <h3 className="forgot">Reset Password</h3>
 
             <label>New Password</label>
             <div className="input-wrap">
@@ -377,23 +368,19 @@ e.preventDefault();
               </button>
             </div>
 
-            <button className="btn-primary" onClick={handleResetPassword}>
-              Update Password
+            <button className="btn-primary" onClick={handleResetPassword} disabled={loading}>
+              {loading ? "Updating..." : "Update Password"}
             </button>
           </div>
         </div>
       )}
 
-      {/* Success Modal */}
       {showSuccessModal && (
         <div className="modal-overlay">
           <div className="modal-box">
             <h3 className="forgot">Success!</h3>
             <p className="forgot">Congratulations! You have been successfully authenticated</p>
-            <button
-              className="btn-primary"
-              onClick={() => setShowSuccessModal(false)}
-            >
+            <button className="btn-primary" onClick={() => setShowSuccessModal(false)}>
               Close
             </button>
           </div>

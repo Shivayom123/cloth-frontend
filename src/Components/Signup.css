@@ -495,6 +495,11 @@
 
 
 }
+/* move right-column labels slightly down for alignment */
+  .right-field {
+    margin-top: 8px !important;
+  }
+
 }
 
 
