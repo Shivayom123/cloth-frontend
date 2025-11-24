@@ -156,55 +156,76 @@ function Login() {
   };
 
   // ====== Reset Password ======
-  const handleResetPassword = async (e) => {
-    if (e) e.preventDefault();
+const handleResetPassword = async (e) => {
+  if (e) e.preventDefault();
 
-    try {
-      if (!newPassword || !confirmPassword)
-        return alert("Please fill both password fields");
-      if (newPassword !== confirmPassword) return alert("Passwords do not match");
-
-      setLoading(true);
-
-      const payload = { newPassword, confirmPassword };
-      if (resetOtp) payload.otp = resetOtp;
-      if (forgotValue) {
-        if (forgotValue.includes("@"))
-          payload.email = forgotValue.trim().toLowerCase();
-        else payload.mobileNumber = forgotValue.trim();
-      }
-
-      console.log("Reset payload:", payload);
-
-      const res = await axios.post(
-        "https://cloth-backend-yhka.onrender.com/reset-password",
-        payload,
-        { headers: { "Content-Type": "application/json" } }
-      );
-
-      console.log("Reset response:", res?.data);
-
-      if (res.data?.success) {
-        alert(res.data.message || "Password reset successful!");
-        setStep(null);
-        setNewPassword("");
-        setConfirmPassword("");
-        setResetOtp("");
-        setForgotValue("");
-        setShowSuccessModal(true);
-      } else {
-        alert(res.data?.message || "Unable to reset password.");
-      }
-    } catch (err) {
-      console.error("Reset error:", err?.response || err);
-      alert(
-        "Error resetting password: " +
-          (err?.response?.data?.message || err?.message || "Server error")
-      );
-    } finally {
-      setLoading(false);
+  try {
+    if (!newPassword || !confirmPassword) {
+      return alert("Please fill both password fields");
     }
-  };
+
+    if (newPassword !== confirmPassword) {
+      return alert("Passwords do not match");
+    }
+
+    setLoading(true);
+
+    // FRONTEND MUST MATCH BACKEND FIELDS
+    const payload = {
+      newPassword,
+      confirmPassword
+    };
+
+    // Add OTP if available
+    if (resetOtp) payload.otp = resetOtp;
+
+    // Add email or mobile
+    if (forgotValue) {
+      if (forgotValue.includes("@")) {
+        payload.email = forgotValue.trim().toLowerCase();
+      } else {
+        payload.mobileNumber = forgotValue.trim();
+      }
+    }
+
+    console.log("Reset payload:", payload);
+
+    const res = await axios.post(
+      "https://cloth-backend-yhka.onrender.com/reset-password",
+      payload,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    console.log("Reset response:", res?.data);
+
+    if (res.data?.success) {
+      alert(res.data.message || "Password reset successful!");
+
+      setStep(null);
+      setNewPassword("");
+      setConfirmPassword("");
+      setResetOtp("");
+      setForgotValue("");
+      setShowSuccessModal(true);
+
+    } else {
+      alert(res.data?.message || "Unable to reset password.");
+    }
+
+  } catch (err) {
+    console.error("Reset error:", err?.response || err);
+    alert(
+      "Error resetting password: " +
+        (err?.response?.data?.message || err?.message || "Server error")
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   // ====== Resend OTP ======
   const handleResend = async () => {
