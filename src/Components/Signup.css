@@ -371,8 +371,13 @@
   font-weight: 600;
   padding-left: 20px;   /* smooth slide */
 }
+.state-mng{
+  margin-left: 22px;
+}
+.city-mng{
+  margin-left: -19px;
 
-
+}
 
 
 

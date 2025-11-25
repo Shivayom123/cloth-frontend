@@ -808,7 +808,8 @@ if (!gst) {
           {/* Last Name */}
           <div className="field half length" style={inputContainerStyle}>
             <label>
-              Last Name<span className="spd">*</span>
+              Last 
+              Name<span className="spd">*</span>
             </label>
             <input
               className={`input-design ${fieldErrors.lastName ? "input-error" : ""}`}
@@ -873,9 +874,54 @@ if (!gst) {
             </div>
           </div>
 
-        {/* City */}
+          
+
+      {/* State */}
+      <div className="field half length" style={inputContainerStyle}>
+      <div className="state-mange" ref={stateRef}>
+      <div className="state-mng">
+      <label>
+      State<span className="spd">*</span>
+      </label>
+     <input
+      className={`input-design ${fieldErrors.state ? "input-error" : ""}`}
+      type="text"
+      name="state"
+      placeholder={fieldErrors.state || "Select State"}
+      value={formData.state}
+      readOnly
+      onClick={() => setShowStates(!showStates)}
+    />
+    </div> 
+
+    {/* STATE DROPDOWN */}
+    {showStates && (
+      <ul className="city-dropdown">
+        {statesList.map((state) => (
+          <li
+            key={state}
+            onClick={() => {
+              handleChange({ target: { name: "state", value: state } });
+              setShowStates(false);
+            }}
+          >
+            {state}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {/* POPUP */}
+    {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
+    </div>
+    </div>
+
+
+
+     {/* City */}
      <div className="field half" style={inputContainerStyle}>
      <div className="city-mange" ref={cityRef}>
+      <div className="city-mng">
     <label>
       City<span className="spd">*</span>
     </label>
@@ -890,6 +936,7 @@ if (!gst) {
       readOnly
       onClick={() => setShowCities(!showCities)}
     />
+    </div>
 
     {/* CITY DROPDOWN */}
     {showCities && (
@@ -912,46 +959,6 @@ if (!gst) {
     {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
   </div>
 </div>
-
-
-  {/* State */}
-   <div className="field half length" style={inputContainerStyle}>
-  <div className="state-mange" ref={stateRef}>
-    <label>
-      State<span className="spd">*</span>
-    </label>
-     <input
-      className={`input-design ${fieldErrors.state ? "input-error" : ""}`}
-      type="text"
-      name="state"
-      placeholder={fieldErrors.state || "Select State"}
-      value={formData.state}
-      readOnly
-      onClick={() => setShowStates(!showStates)}
-    />
-
-    {/* STATE DROPDOWN */}
-    {showStates && (
-      <ul className="city-dropdown">
-        {statesList.map((state) => (
-          <li
-            key={state}
-            onClick={() => {
-              handleChange({ target: { name: "state", value: state } });
-              setShowStates(false);
-            }}
-          >
-            {state}
-          </li>
-        ))}
-      </ul>
-    )}
-
-    {/* POPUP */}
-    {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
-  </div>
-</div>
-
 
           {/* Password */}
           <div className="field half password-field" style={inputContainerStyle}>
