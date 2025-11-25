@@ -438,7 +438,19 @@ function Signup() {
     "Chennai",
     "Kolkata",
     "Surat",
-    "Ahmedabad"
+    "Ahmedabad",
+    "Jaipur", 
+    "Lucknow", 
+    "Kanpur", 
+    "Nagpur",
+    "Indore", 
+    "Thane", 
+    "Bhopal", 
+    "Visakhapatnam", 
+    "Pimpri-Chinchwad",
+    "Patna", 
+    "Vadodara",
+    "Ghaziabad"
   ]
 
 const statesList = [
