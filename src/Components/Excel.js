@@ -441,6 +441,38 @@ function Signup() {
     "Ahmedabad"
   ]
 
+const statesList = [
+  "Andhra Pradesh",
+  "Arunachal Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar Pradesh",
+  "Uttarakhand",
+  "West Bengal"
+];
+
+  const[showStates,setShowStates] = useState(false)
   const[showCities,setShowCities] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -804,19 +836,18 @@ if (!gst) {
         {/* INPUT (user can't type) */}
         <input
         className={`input-design ${fieldErrors.city ? "input-error" : ""}`}
-      type="text"
-      name="city"
-      placeholder={fieldErrors.city || "Select City"}
-      value={formData.city}
-      readOnly                          // ❗ user cannot type
-      onClick={() => setShowCities(!showCities)}   // open dropdown
-    />
-
-    {/* CITY DROPDOWN */}
-    {showCities && (
-      <ul className="city-dropdown">
-        {cityList.map((city) => (
-          <li
+        type="text"
+         name="city"
+         placeholder={fieldErrors.city || "Select City"}
+         value={formData.city}
+         readOnly                          // ❗ user cannot type
+         onClick={() => setShowCities(!showCities)}   // open dropdown
+         />
+       {/* CITY DROPDOWN */}
+       {showCities && (
+       <ul className="city-dropdown">
+         {cityList.map((city) => (
+           <li
             key={city}
             onClick={() => {
               handleChange({ target: { name: "city", value: city } });
@@ -831,9 +862,8 @@ if (!gst) {
 
     {/* POPUP SAME */}
     {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
-
-  </div>
-</div>
+    </div>
+    </div>
 
 
           {/* State */}
@@ -846,11 +876,29 @@ if (!gst) {
               className={`input-design ${fieldErrors.state ? "input-error" : ""}`}
               type="text"
               name="state"
-              placeholder={fieldErrors.state || ""}
+              placeholder={fieldErrors.state || "Select State"}
               value={formData.state}
-              onChange={handleChange}
+              readOnly
+              onClick={()=>setShowStates(!showStates)}
             />
-            {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
+       {/* STATE DROPDOWN */}
+       {showStates && (
+       <ul className="city-dropdown">
+         {statesList.map((state) => (
+           <li
+            key={state}
+            onClick={() => {
+              handleChange({ target: { name: "state", value: state } });
+              setShowCities(false);
+            }}
+          >
+            {state}
+          </li>
+        ))}
+      </ul>
+    )}         
+    
+        {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
           </div>
           </div>
 

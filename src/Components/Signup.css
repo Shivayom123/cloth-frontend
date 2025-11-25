@@ -349,6 +349,62 @@
   background: #f3f3f3;
 }
 
+/* styliesh state pop */ 
+
+.city-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  /* ⬆️ Increased Width */
+  width: 120%;                 /* increase width */
+  min-width: 200px;            /* ensure it’s wide enough */
+
+  background: #ffffff;
+  border-radius: 12px;
+  margin-top: 6px;
+  padding: 10px 0;
+  list-style: none;
+
+  /* ⬆️ Increased Height */
+  max-height: 300px;           /* bigger dropdown height */
+  overflow-y: auto;
+
+  z-index: 50;
+
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+
+  animation: dropdownFade 0.25s ease-out;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.city-dropdown li {
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, padding-left 0.2s ease;
+  font-size: 15px;
+  color: #333;
+}
+
+.city-dropdown li:hover {
+  background: #eef2ff;
+  padding-left: 26px;
+  border-radius: 8px;
+}
+
+
+
 
 /* ===== Mobile: two equal columns with full-width inputs ===== */
 
