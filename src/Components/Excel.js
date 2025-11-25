@@ -484,7 +484,9 @@ const statesList = [
   "Uttarakhand",
   "West Bengal"
 ];
-
+ 
+  const cityRef = useRef(null);
+  const stateRef = useRef(null);
   const[showStates,setShowStates] = useState(false)
   const[showCities,setShowCities] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
@@ -505,6 +507,37 @@ const statesList = [
       isMounted.current = false;
     };
   }, []);
+  
+  // city ref
+
+  useEffect(() => {
+  function handleClickOutside(e) {
+    if (cityRef.current && !cityRef.current.contains(e.target)) {
+      setShowCities(false);
+    }
+  }
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+   }, []);
+
+
+   // state ref 
+  useEffect(() => {
+  function handleOutsideState(e) {
+    if (stateRef.current && !stateRef.current.contains(e.target)) {
+      setShowStates(false);
+    }
+  }
+
+   document.addEventListener("mousedown", handleOutsideState);
+   return () => {
+    document.removeEventListener("mousedown", handleOutsideState);
+   };
+   }, []);
+
+
 
   // hide error toast automatically after 4s
   useEffect(() => {
@@ -840,27 +873,29 @@ if (!gst) {
             </div>
           </div>
 
-          {/* City */}
-        <div className="field half" style={inputContainerStyle}>
-        <div className="city-mange">
-        <label>
-          City<span className="spd">*</span>
-        </label>
-        {/* INPUT (user can't type) */}
-        <input
-        className={`input-design ${fieldErrors.city ? "input-error" : ""}`}
-        type="text"
-         name="city"
-         placeholder={fieldErrors.city || "Select City"}
-         value={formData.city}
-         readOnly                          // ❗ user cannot type
-         onClick={() => setShowCities(!showCities)}   // open dropdown
-         />
-       {/* CITY DROPDOWN */}
-       {showCities && (
-       <ul className="city-dropdown">
-         {cityList.map((city) => (
-           <li
+        {/* City */}
+     <div className="field half" style={inputContainerStyle}>
+     <div className="city-mange" ref={cityRef}>
+    <label>
+      City<span className="spd">*</span>
+    </label>
+
+    {/* INPUT */}
+    <input
+      className={`input-design ${fieldErrors.city ? "input-error" : ""}`}
+      type="text"
+      name="city"
+      placeholder={fieldErrors.city || "Select City"}
+      value={formData.city}
+      readOnly
+      onClick={() => setShowCities(!showCities)}
+    />
+
+    {/* CITY DROPDOWN */}
+    {showCities && (
+      <ul className="city-dropdown">
+        {cityList.map((city) => (
+          <li
             key={city}
             onClick={() => {
               handleChange({ target: { name: "city", value: city } });
@@ -873,32 +908,33 @@ if (!gst) {
       </ul>
     )}
 
-    {/* POPUP SAME */}
+    {/* POPUP */}
     {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
-    </div>
-    </div>
+  </div>
+</div>
 
 
-          {/* State */}
-          <div className="field half length" style={inputContainerStyle}>
-            <div className="state-mange">
-            <label>
-              State<span className="spd">*</span>
-            </label>
-            <input
-              className={`input-design ${fieldErrors.state ? "input-error" : ""}`}
-              type="text"
-              name="state"
-              placeholder={fieldErrors.state || "Select State"}
-              value={formData.state}
-              readOnly
-              onClick={()=>setShowStates(!showStates)}
-            />
-       {/* STATE DROPDOWN */}
-       {showStates && (
-       <ul className="city-dropdown">
-         {statesList.map((state) => (
-           <li
+  {/* State */}
+   <div className="field half length" style={inputContainerStyle}>
+  <div className="state-mange" ref={stateRef}>
+    <label>
+      State<span className="spd">*</span>
+    </label>
+     <input
+      className={`input-design ${fieldErrors.state ? "input-error" : ""}`}
+      type="text"
+      name="state"
+      placeholder={fieldErrors.state || "Select State"}
+      value={formData.state}
+      readOnly
+      onClick={() => setShowStates(!showStates)}
+    />
+
+    {/* STATE DROPDOWN */}
+    {showStates && (
+      <ul className="city-dropdown">
+        {statesList.map((state) => (
+          <li
             key={state}
             onClick={() => {
               handleChange({ target: { name: "state", value: state } });
@@ -909,11 +945,13 @@ if (!gst) {
           </li>
         ))}
       </ul>
-    )}         
-    
-        {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
-          </div>
-          </div>
+    )}
+
+    {/* POPUP */}
+    {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
+  </div>
+</div>
+
 
           {/* Password */}
           <div className="field half password-field" style={inputContainerStyle}>
