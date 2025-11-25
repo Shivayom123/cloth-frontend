@@ -429,6 +429,19 @@ function Signup() {
     confirmPassword: "",
   });
 
+  const cityList=[
+    "Mumbai",
+    "Delhi",
+    "Pune",
+    "Bangalore",
+    "Hyderabad",
+    "Chennai",
+    "Kolkata",
+    "Surat",
+    "Ahmedabad"
+  ]
+
+  const[showCities,setShowCities] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -783,22 +796,45 @@ if (!gst) {
           </div>
 
           {/* City */}
-          <div className="field half" style={inputContainerStyle}>
-            <div className="city-mange">
-            <label>
-              City<span className="spd">*</span>
-            </label>
-            <input
-              className={`input-design ${fieldErrors.city ? "input-error" : ""}`}
-              type="text"
-              name="city"
-              placeholder={fieldErrors.city || ""}
-              value={formData.city}
-              onChange={handleChange}
-            />
-            {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
-          </div>
-          </div>
+        <div className="field half" style={inputContainerStyle}>
+        <div className="city-mange">
+        <label>
+          City<span className="spd">*</span>
+        </label>
+        {/* INPUT (user can't type) */}
+        <input
+        className={`input-design ${fieldErrors.city ? "input-error" : ""}`}
+      type="text"
+      name="city"
+      placeholder={fieldErrors.city || "Select City"}
+      value={formData.city}
+      readOnly                          // ❗ user cannot type
+      onClick={() => setShowCities(!showCities)}   // open dropdown
+    />
+
+    {/* CITY DROPDOWN */}
+    {showCities && (
+      <ul className="city-dropdown">
+        {cityList.map((city) => (
+          <li
+            key={city}
+            onClick={() => {
+              handleChange({ target: { name: "city", value: city } });
+              setShowCities(false);
+            }}
+          >
+            {city}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {/* POPUP SAME */}
+    {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
+
+  </div>
+</div>
+
 
           {/* State */}
           <div className="field half length" style={inputContainerStyle}>
