@@ -901,7 +901,7 @@ if (!gst) {
             key={state}
             onClick={() => {
               handleChange({ target: { name: "state", value: state } });
-              setShowCities(false);
+              setShowStates(false);
             }}
           >
             {state}
