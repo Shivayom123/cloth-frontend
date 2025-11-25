@@ -511,9 +511,7 @@ function Signup() {
     // phone: exactly 10 digits
 let phone = formData.phone.trim();
 
-// Regex:
-// 1️⃣   Exactly 10 digits  →  /^[0-9]{10}$/
-// 2️⃣   +91 + 10 digits    →  /^\+91[0-9]{10}$/
+
 const phoneRe = /^(\+91[0-9]{10}|[0-9]{10})$/;
 
 if (!phone) {
@@ -524,13 +522,16 @@ if (!phone) {
 
 
     // gst: exactly 8 digits (per your requirement). adjust if needed.
-    const gst = formData.gst.trim();
-    const gstRe = /^\d{15}$/;
-    if (!gst) {
-      errors.gst = "15 digit gst no. required";
-    } else if (!gstRe.test(gst)) {
-      errors.gst = "GST must be exactly 15 digits";
-    }
+ const gst = formData.gst.trim();
+const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
+;
+
+if (!gst) {
+  errors.gst = "15 character GST required";
+} else if (!gstRe.test(gst)) {
+  errors.gst = "GST must start with official gst structure";
+}
+
 
     if (!formData.city.trim()) errors.city = "City required";
     if (!formData.state.trim()) errors.state = "State required";
