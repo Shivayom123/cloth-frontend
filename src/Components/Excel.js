@@ -429,29 +429,30 @@ function Signup() {
     confirmPassword: "",
   });
 
-  const cityList=[
-    "Mumbai",
-    "Delhi",
-    "Pune",
-    "Bangalore",
-    "Hyderabad",
-    "Chennai",
-    "Kolkata",
-    "Surat",
-    "Ahmedabad",
-    "Jaipur", 
-    "Lucknow", 
-    "Kanpur", 
-    "Nagpur",
-    "Indore", 
-    "Thane", 
-    "Bhopal", 
-    "Visakhapatnam", 
-    "Pimpri-Chinchwad",
-    "Patna", 
-    "Vadodara",
-    "Ghaziabad"
-  ]
+const cityList = [
+  "Ahmedabad",
+  "Bangalore",
+  "Bhopal",
+  "Chennai",
+  "Delhi",
+  "Ghaziabad",
+  "Hyderabad",
+  "Indore",
+  "Jaipur",
+  "Kanpur",
+  "Kolkata",
+  "Lucknow",
+  "Mumbai",
+  "Nagpur",
+  "Patna",
+  "Pimpri-Chinchwad",
+  "Pune",
+  "Surat",
+  "Thane",
+  "Vadodara",
+  "Visakhapatnam"
+];
+
 
 const statesList = [
   "Andhra Pradesh",
