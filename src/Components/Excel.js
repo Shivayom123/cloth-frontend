@@ -529,7 +529,7 @@ const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
 if (!gst) {
   errors.gst = "15 character GST required";
 } else if (!gstRe.test(gst)) {
-  errors.gst = "GST must start with official gst structure";
+  errors.gst = "GST must start with official gst formate";
 }
 
 
