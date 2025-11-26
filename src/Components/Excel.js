@@ -576,6 +576,7 @@ const statesList = [
     }, duration);
   };
 
+  
   // handle input change
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -632,16 +633,15 @@ const handleChange = (e) => {
     }
 
     // phone: exactly 10 digits
-let phone = formData.phone.trim();
-
-
+let phone = formData.phone.replace(/\s+/g, "").trim();
 const phoneRe = /^(\+91[0-9]{10}|[0-9]{10})$/;
 
 if (!phone) {
   errors.phone = "add +91 Phone number required";
 } else if (!phoneRe.test(phone)) {
-  errors.phone = "Enter 10 digits or +91 + 10 digits";
+  errors.phone = "Enter 10 digit phone number";
 }
+
 
 
     // gst: exactly 8 digits (per your requirement). adjust if needed.
