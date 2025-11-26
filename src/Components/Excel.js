@@ -613,13 +613,17 @@ if (!phone) {
 
 
     // gst: exactly 8 digits (per your requirement). adjust if needed.
-const gst = formData.gst.trim();
+const gst = formData.gst.trim().toUpperCase(); // convert lowercase → UPPERCASE
+
+// GSTIN Format (15 characters)
 const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
+
 if (!gst) {
-  errors.gst = "15 character GST required";
+  errors.gst = "15 character GST is required";
 } else if (!gstRe.test(gst)) {
-  errors.gst = "GST must start with official gst formate";
+  errors.gst = "Invalid GST format. Use only numbers and CAPITAL letters";
 }
+
 
 
     if (!formData.city.trim()) errors.city = "City required";
