@@ -417,7 +417,7 @@ const handleResetPassword = async (e) => {
 
 
 function Signup() {
-  const [formData, setFormData] = useState({
+const[formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -487,8 +487,8 @@ const statesList = [
  
   const cityRef = useRef(null);
   const stateRef = useRef(null);
-  const[showStates,setShowStates] = useState(false)
-  const[showCities,setShowCities] = useState(false)
+  const [showStates,setShowStates] = useState(false)
+  const [showCities,setShowCities] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -613,10 +613,8 @@ if (!phone) {
 
 
     // gst: exactly 8 digits (per your requirement). adjust if needed.
- const gst = formData.gst.trim();
+const gst = formData.gst.trim();
 const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
-;
-
 if (!gst) {
   errors.gst = "15 character GST required";
 } else if (!gstRe.test(gst)) {
@@ -795,7 +793,7 @@ if (!gst) {
               First Name<span className="spd">*</span>
             </label>
             <input
-              className={`input-design ${fieldErrors.firstName ? "input-error" : ""}`}
+              className={`input-design  ${fieldErrors.firstName ? "input-error" : ""}`}
               type="text"
               name="firstName"
               placeholder={fieldErrors.firstName || ""}
@@ -884,7 +882,7 @@ if (!gst) {
       State<span className="spd">*</span>
       </label>
      <input
-      className={`input-design ${fieldErrors.state ? "input-error" : ""}`}
+      className={`input-design tab-view ${fieldErrors.state ? "input-error" : ""}`}
       type="text"
       name="state"
       placeholder={fieldErrors.state || "Select State"}
@@ -921,10 +919,10 @@ if (!gst) {
      {/* City */}
      <div className="field half" style={inputContainerStyle}>
      <div className="city-mange" ref={cityRef}>
-      <div className="city-mng">
-    <label>
+     <div className="city-mng">
+     <label>
       City<span className="spd">*</span>
-    </label>
+     </label>
 
     {/* INPUT */}
     <input
@@ -957,8 +955,8 @@ if (!gst) {
 
     {/* POPUP */}
     {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
-  </div>
-</div>
+    </div>
+    </div>
 
           {/* Password */}
           <div className="field half password-field" style={inputContainerStyle}>
