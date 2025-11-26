@@ -501,6 +501,11 @@ const statesList = [
   const navigate = useNavigate();
   const isMounted = useRef(true);
 
+  // allow the number part in side phone input 
+
+
+
+
   // prevent state updates when component unmounts
   useEffect(() => {
     return () => {
@@ -572,17 +577,44 @@ const statesList = [
   };
 
   // handle input change
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrorMsg("");
-    setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
-    // also clear popup for that field immediately when user types
-    setFieldPopups((prev) => {
-      const copy = { ...prev };
-      delete copy[e.target.name];
-      return copy;
-    });
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  let updatedValue = value;
+
+  // ⭐ PHONE: auto +91 + digits only
+  if (name === "phone") {
+    let clean = value.replace(/^\+91/, "");   // remove manual +91
+    clean = clean.replace(/[^0-9]/g, "");     // digits only
+    clean = clean.slice(0, 10);               // max 10 digits
+    updatedValue = "+91 " + clean;
+  }
+
+  // ⭐ GST: only CAPITAL letters + digits (block lowercase)
+  if (name === "gst") {
+    updatedValue = value.toUpperCase().replace(/[^0-9A-Z]/g, "");
+    // lowercase converts to uppercase automatically
+    // alphabets + numbers ONLY
+  }
+
+  // update input values
+  setFormData((prev) => ({
+    ...prev,
+    [name]: updatedValue,
+  }));
+
+  // clear errors
+  setErrorMsg("");
+  setFieldErrors((prev) => ({ ...prev, [name]: "" }));
+  setFieldPopups((prev) => {
+    const copy = { ...prev };
+    delete copy[name];
+    return copy;
+  });
+};
+
+
+
+  
 
   // validation - improved checks for phone, gst, password length
   const validateForm = () => {
@@ -847,13 +879,14 @@ if (!gst) {
               Phone<span className="spd">*</span>
             </label>
             <input
-              className={`input-design ${fieldErrors.phone ? "input-error" : ""}`}
-              type="text"
-              name="phone"
-              placeholder={fieldErrors.phone || ""}
-              value={formData.phone}
-              onChange={handleChange}
-            />
+            className={`input-design ${fieldErrors.phone ? "input-error" : ""}`}
+             type="text"
+             name="phone"
+             placeholder={fieldErrors.phone || ""}
+             value={formData.phone}
+            onChange={handleChange}
+             />
+
             {fieldPopups.phone && <div style={popupStyle}>{fieldPopups.phone}</div>}
           </div>
           </div>
