@@ -63,9 +63,14 @@
   transition: 0.3s ease;
   width: 100px;
   height: 40px;
-  margin-right: -10px;
   color: #b00087 !important;
+
+  /* Make it stable */
+  display: inline-block;      /* prevent stretching */
+  text-align: center;
+  margin: 0;                  /* reset any margin that moves it */
 }
+
 
 .footer-btn:hover {
   background: #fff;
