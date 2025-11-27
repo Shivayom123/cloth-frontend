@@ -454,7 +454,7 @@ const cityList = [
 ];
 
 
-const statesList = [
+const states = [
   "Andhra Pradesh",
   "Arunachal Pradesh",
   "Assam",
@@ -484,7 +484,13 @@ const statesList = [
   "Uttarakhand",
   "West Bengal"
 ];
+
+// For State input
  
+
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchCity, setSearchCity] = useState("");
   const cityRef = useRef(null);
   const stateRef = useRef(null);
   const [showStates,setShowStates] = useState(false)
@@ -633,22 +639,22 @@ const handleChange = (e) => {
     }
 
     // phone: exactly 10 digits
-let phone = formData.phone.replace(/\s+/g, "").trim();
-const phoneRe = /^(\+91[0-9]{10}|[0-9]{10})$/;
+    let phone = formData.phone.replace(/\s+/g, "").trim();
+    const phoneRe = /^(\+91[0-9]{10}|[0-9]{10})$/;
 
-if (!phone) {
-  errors.phone = "add +91 Phone number required";
-} else if (!phoneRe.test(phone)) {
-  errors.phone = "Enter 10 digit phone number";
-}
+    if (!phone) {
+    errors.phone = "add +91 Phone number required";
+    } else if (!phoneRe.test(phone)) {
+    errors.phone = "Enter 10 digit phone number";
+    }
 
 
 
     // gst: exactly 8 digits (per your requirement). adjust if needed.
-const gst = formData.gst.trim().toUpperCase(); // convert lowercase → UPPERCASE
+   const gst = formData.gst.trim().toUpperCase(); // convert lowercase → UPPERCASE
 
 // GSTIN Format (15 characters)
-const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
+   const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
 
 if (!gst) {
   errors.gst = "15 character GST is required";
@@ -909,91 +915,97 @@ if (!gst) {
             </div>
           </div>
 
-          
 
-      {/* State */}
-      <div className="field half length" style={inputContainerStyle}>
-      <div className="state-mange" ref={stateRef}>
-      <div className="state-mng">
-      <label>
+   {/*state*/}
+   <div className="field half length" style={inputContainerStyle}>
+    <div className="state-mange" style={{ position: "relative" }} ref={stateRef}>
+    <div className="state-mng" style={{ position: "relative", overflow: "visible" }}>
+       <label>
       State<span className="spd">*</span>
-      </label>
-     <input
-      className={`input-design tab-view ${fieldErrors.state ? "input-error" : ""}`}
-      type="text"
-      name="state"
-      placeholder={fieldErrors.state || "Select State"}
-      value={formData.state}
-      readOnly
-      onClick={() => setShowStates(!showStates)}
+     </label>
+
+  {/* Input */}
+    <input
+    className={`input-design tab-view ${fieldErrors.state ? "input-error" : ""}`}
+    type="text"
+    name="state"
+    placeholder={fieldErrors.state || "Select State"}
+    value={searchTerm}        // <-- keep this as searchTerm
+    onClick={() => setShowStates(!showStates)}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    style={{ position: "relative", zIndex: 20 }}
     />
-    </div> 
+    {/* Dropdown */}
 
-    {/* STATE DROPDOWN */}
-    {showStates && (
-      <ul className="city-dropdown">
-        {statesList.map((state) => (
-          <li
-            key={state}
-            onClick={() => {
-              handleChange({ target: { name: "state", value: state } });
-              setShowStates(false);
-            }}
-          >
-            {state}
-          </li>
-        ))}
+     {showStates && (
+     <ul className="city-dropdown">
+      {states
+        .filter(state => state.toLowerCase().includes(searchTerm.toLowerCase()))
+        .map((stateName, idx) => (
+        <li
+        key={idx}
+        onClick={() => {
+        setFormData({ ...formData, state: stateName }); // store for backend
+        setSearchTerm(stateName);                        // show in input
+        setShowStates(false);
+       }}
+       >
+      {stateName}
+      </li>
+       ))}
       </ul>
-    )}
+         )}
+      </div>
+      </div>
+      </div>
 
-    {/* POPUP */}
-    {fieldPopups.state && <div style={popupStyle}>{fieldPopups.state}</div>}
-    </div>
-    </div>
 
 
 
      {/* City */}
      <div className="field half" style={inputContainerStyle}>
-     <div className="city-mange" ref={cityRef}>
-     <div className="city-mng">
+     <div className="city-mange" style={{ position: "relative" }} ref={cityRef}>
+     <div className="city-mng" style={{ position: "relative", overflow: "visible" }}>
      <label>
-      City<span className="spd">*</span>
+     City<span className="spd">*</span>
      </label>
-
-    {/* INPUT */}
-    <input
-      className={`input-design ${fieldErrors.city ? "input-error" : ""}`}
-      type="text"
-      name="city"
-      placeholder={fieldErrors.city || "Select City"}
-      value={formData.city}
-      readOnly
-      onClick={() => setShowCities(!showCities)}
-    />
-    </div>
-
-    {/* CITY DROPDOWN */}
-    {showCities && (
+     {/* Input */}
+      <input
+        className={`input-design ${fieldErrors.city ? "input-error" : ""}`}
+        type="text"
+        name="city"
+        placeholder={fieldErrors.city || "Select City"}
+        value={searchCity}                      // controlled input
+        onClick={() => setShowCities(!showCities)}
+        onChange={(e) => setSearchCity(e.target.value)}
+        style={{ position: "relative", zIndex: 20 }}
+      />
+      {/* Dropdown */}
+      {showCities && (
       <ul className="city-dropdown">
-        {cityList.map((city) => (
-          <li
-            key={city}
-            onClick={() => {
-              handleChange({ target: { name: "city", value: city } });
-              setShowCities(false);
-            }}
-          >
-            {city}
-          </li>
+      {cityList
+      .filter(city => city.toLowerCase().includes(searchCity.toLowerCase()))
+      .map((cityName, idx) => (
+       <li
+       key={idx}
+       onClick={() => {
+       setFormData({ ...formData, city: cityName }); // store for backend
+       setSearchCity(cityName);                       // show in input
+       setShowCities(false);
+       }}
+       >
+       {cityName}
+       </li>
         ))}
       </ul>
-    )}
+      )}
 
-    {/* POPUP */}
-    {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
+      {/* Popup */}
+      {fieldPopups.city && <div style={popupStyle}>{fieldPopups.city}</div>}
     </div>
-    </div>
+  </div>
+</div>
+
 
           {/* Password */}
           <div className="field half password-field" style={inputContainerStyle}>
