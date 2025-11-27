@@ -53,6 +53,13 @@
   color: #fff;
 }
 
+.footer-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  
+}
+
 .footer-btn {
   padding: 8px 16px;
   background-color: #EFCCE7 !important;
@@ -70,6 +77,7 @@
   text-align: center;
   margin: 0;                  /* reset any margin that moves it */
 }
+
 
 
 .footer-btn:hover {

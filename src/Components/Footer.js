@@ -24,7 +24,7 @@ function Footer() {
           />
          
       </div>
-       <div>
+       <div className="footer-btn-wrapper">
         <button className="footer-btn">Submit</button>
         </div>
         </div>
