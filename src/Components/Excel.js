@@ -654,7 +654,8 @@ const handleChange = (e) => {
    const gst = formData.gst.trim().toUpperCase(); // convert lowercase → UPPERCASE
 
 // GSTIN Format (15 characters)
-   const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
+
+const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
 
 if (!gst) {
   errors.gst = "15 character GST is required";
@@ -907,6 +908,7 @@ if (!gst) {
                 className={`input-design ${fieldErrors.gst ? "input-error" : ""}`}
                 type="text"
                 name="gst"
+                maxLength={15} 
                 placeholder={fieldErrors.gst || ""}
                 value={formData.gst}
                 onChange={handleChange}
