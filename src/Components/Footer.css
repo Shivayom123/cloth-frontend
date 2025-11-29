@@ -60,6 +60,16 @@
   
 }
 
+/* Parent container of email + button */
+.footer-email-box {
+  display: flex;
+  justify-content: center;  /* Centers horizontally */
+  align-items: center;
+  gap: 10px;                /* space between input & button */
+  width: 100%;
+}
+
+/* Submit Button */
 .footer-btn {
   padding: 8px 16px;
   background-color: #EFCCE7 !important;
@@ -71,12 +81,10 @@
   width: 100px;
   height: 40px;
   color: #b00087 !important;
-
-  /* Make it stable */
-  display: inline-block;      /* prevent stretching */
+  display: inline-block;
   text-align: center;
-  margin: 0;                  /* reset any margin that moves it */
 }
+
 
 
 
