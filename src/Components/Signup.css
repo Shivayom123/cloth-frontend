@@ -564,12 +564,35 @@
     margin-top: 8px !important;
   }
 
-.state-mng{
-  width: 157px;
+.state-mng,
+.city-mng {
+  /* let the grid control width; fill available column */
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;            /* important so grid item can shrink */
+  box-sizing: border-box;  /* include padding/border in width */
 }
-.city-mng{
- width: 157px;
 
+/* If those are select elements, ensure full width too */
+.state-mng select,
+.city-mng select,
+.state-mng input,
+.city-mng input {
+  width: 100% !important;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border-radius: 22px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+/* If you want them to be narrower than full-width but consistent,
+   use percentage or max-width (example keeps them about half width) */
+.state-mng.small,
+.city-mng.small {
+  width: 48% !important;   /* two columns with a small gap */
+  max-width: 48% !important;
 }
 
 }

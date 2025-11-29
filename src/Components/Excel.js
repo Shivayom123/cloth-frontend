@@ -651,17 +651,18 @@ const handleChange = (e) => {
 
 
     // gst: exactly 8 digits (per your requirement). adjust if needed.
-   const gst = formData.gst.trim().toUpperCase(); // convert lowercase → UPPERCASE
-
-// GSTIN Format (15 characters)
+const gst = formData.gst.toUpperCase().replace(/\s+/g, "");
 
 const gstRe = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/;
 
 if (!gst) {
   errors.gst = "15 character GST is required";
+} else if (gst.length !== 15) {
+  errors.gst = "GST must be exactly 15 characters";
 } else if (!gstRe.test(gst)) {
-  errors.gst = "Invalid GST format. Use only numbers and CAPITAL letters";
+  errors.gst = "Invalid GST format. Use only CAPITAL letters and numbers";
 }
+
 
 
 
