@@ -742,6 +742,17 @@ if (!gst) {
         msg.includes("created") ||
         msg.includes("registered");
 
+     axios.post("https://cloth-backend-yhka.onrender.com/signup", formData)
+    .then((res) => {
+
+    // Save user data
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("firstName", res.data.firstName);
+
+    navigate("/dashboard");   // redirect to dashboard
+  })
+  .catch((err) => console.log(err));
+
       if (successDetected) {
         if (isMounted.current) {
           setErrorMsg(""); // clear errors
@@ -762,16 +773,7 @@ if (!gst) {
     }
   };
 
-  axios.post("https://cloth-backend-yhka.onrender.com/signup", formData)
-  .then((res) => {
-
-    // Save user data
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("firstName", res.data.firstName);
-
-    navigate("/dashboard");   // redirect to dashboard
-  })
-  .catch((err) => console.log(err));
+ 
 
 
   // small helper styles for popups (inline so you don't need external CSS)
