@@ -727,51 +727,49 @@ if (!gst) {
       confirmPassword: formData.confirmPassword,
     };
 
- const res = await axios.post(
-  "https://cloth-backend-yhka.onrender.com/signup",
-  payload
-);
+  try {
+  const res = await axios.post(
+    "https://cloth-backend-yhka.onrender.com/signup",
+    payload
+  );
 
-// Save data
-localStorage.setItem("token", res.data.token);
-localStorage.setItem("firstName", res.data.firstName);
+  const body = res.data || {};
+  const msg = (body.message || "").toLowerCase();
 
-navigate("/dashboard");
+  const successDetected =
+    body.success === true ||
+    body.status === true ||
+    msg.includes("success") ||
+    msg.includes("created") ||
+    msg.includes("registered");
 
-    try {
-      const res = await axios.post(
-        "https://cloth-backend-yhka.onrender.com/signup",
-        payload
-      );
+  if (successDetected) {
+    // Save token + firstName correctly
+    localStorage.setItem("token", body.token);
+    localStorage.setItem("firstName", body.firstName);
 
-      const body = res.data || {};
-      const msg = (body.message || "").toLowerCase();
-      const successDetected =
-        body.success === true ||
-        body.status === true ||
-        msg.includes("success") ||
-        msg.includes("created") ||
-        msg.includes("registered");
-
-        if (successDetected) {
-        if (isMounted.current) {
-          setErrorMsg(""); // clear errors
-          setSuccessMsg("Signup successful! Redirecting to dashboard...");
-        }
-        if (body.token) localStorage.setItem("token", body.token);
-      } else {
-        if (isMounted.current)
-          setErrorMsg(body.message || "Signup failed. Please try again.");
-      }
-    } catch (err) {
-      if (isMounted.current)
-        setErrorMsg(
-          err.response?.data?.message || err.message || "Server/network error"
-        );
-    } finally {
-      if (isMounted.current) setLoading(false);
+    if (isMounted.current) {
+      setErrorMsg("");
+      setSuccessMsg("Signup successful! Redirecting to dashboard...");
     }
-  };
+
+    // Redirect user to dashboard
+    navigate("/dashboard");
+  } else {
+    if (isMounted.current)
+      setErrorMsg(body.message || "Signup failed. Please try again.");
+  }
+} catch (err) {
+  if (isMounted.current)
+    setErrorMsg(
+      err.response?.data?.message ||
+        err.message ||
+        "Server / network error"
+    );
+} finally {
+  if (isMounted.current) setLoading(false);
+}
+  }
 
  
 
@@ -1150,9 +1148,9 @@ function Dashboard() {
 
 // add the first name in dashboard navbar 
 useEffect(() => {
-  const name = localStorage.getItem("firstName");
-  if (name) setFirstName(name);
-}, []);
+    const name = localStorage.getItem("firstName");
+    setFirstName(name);
+  }, []);
 
 
   // Close menu when clicking outside
