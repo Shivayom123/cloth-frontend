@@ -762,6 +762,18 @@ if (!gst) {
     }
   };
 
+  axios.post("https://cloth-backend-yhka.onrender.com/signup", formData)
+  .then((res) => {
+
+    // Save user data
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("firstName", res.data.firstName);
+
+    navigate("/dashboard");   // redirect to dashboard
+  })
+  .catch((err) => console.log(err));
+
+
   // small helper styles for popups (inline so you don't need external CSS)
   const popupStyle = {
     position: "absolute",
@@ -1099,6 +1111,7 @@ if (!gst) {
 
 // ---------------------- DASHBOARD COMPONENT ----------------------
 function Dashboard() {
+  const [firstName, setFirstName] = useState("");
   const [file, setFile] = useState(null);
   const [subOrderNo, setSubOrderNo] = useState("");
   const [filterResult, setFilterResult] = useState(null);
@@ -1132,6 +1145,13 @@ function Dashboard() {
   const handleToggle = () => {
     setShowMenu(!showMenu);
   };
+
+// add the first name in dashboard navbar 
+useEffect(() => {
+  const name = localStorage.getItem("firstName");
+  if (name) setFirstName(name);
+}, []);
+
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -1354,7 +1374,9 @@ function Dashboard() {
      <div className="logo-heading" ref={menuRef}>
       <div onClick={handleToggle} className="logo-container">
         <img src="/Ellipse 2.png" className="shivay" alt="logo" />
-        <h1 className="heading1">Shivayom</h1>
+        <h1 className="heading1">
+        {firstName ? firstName : "Shivayom"}
+        </h1>
       </div>
 
       {showMenu && (
