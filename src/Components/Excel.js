@@ -736,12 +736,13 @@ if (!gst) {
   const body = res.data || {};
   const msg = (body.message || "").toLowerCase();
 
-  const successDetected =
-    body.success === true ||
-    body.status === true ||
-    msg.includes("success") ||
-    msg.includes("created") ||
-    msg.includes("registered");
+ const successDetected =
+  body.success === true ||
+  body.status === true ||
+  msg.includes("success") ||
+  msg.includes("created") ||
+  msg.includes("registered");
+
 
   if (successDetected) {
     // Save token + firstName correctly
