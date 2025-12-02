@@ -748,6 +748,7 @@ if (!gst) {
     // Save token + firstName correctly
     localStorage.setItem("token", body.token);
     localStorage.setItem("firstName", body.firstName);
+    window.dispatchEvent(new Event("storage"));
 
     if (isMounted.current) {
       setErrorMsg("");
@@ -1148,10 +1149,16 @@ function Dashboard() {
   };
 
 // add the first name in dashboard navbar 
-useEffect(() => {
-    const name = localStorage.getItem("firstName");
-    setFirstName(name);
-  }, []);
+  useEffect(() => {
+  const updateName = () => {
+    setFirstName(localStorage.getItem("firstName") || "");
+  };
+
+  window.addEventListener("storage", updateName);
+
+  return () => window.removeEventListener("storage", updateName);
+}, []);
+
 
 
   // Close menu when clicking outside
