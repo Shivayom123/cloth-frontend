@@ -1,5 +1,3 @@
-// new excel.js dashboard navbar
-
 import React, {  useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -7,7 +5,6 @@ import { IoSearch } from "react-icons/io5";
 import { BrowserRouter as Router, Route, Routes ,Navigate} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"
-import { useAuth } from "../AuthContext";
 
 import {
   LineChart,
@@ -506,7 +503,7 @@ const states = [
   const [fieldPopups, setFieldPopups] = useState({}); // { fieldName: message }
   const [agree, setAgree] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
-  const { setFirstName } = useAuth(); 
+
   const navigate = useNavigate();
   const isMounted = useRef(true);
 
@@ -730,36 +727,27 @@ if (!gst) {
       confirmPassword: formData.confirmPassword,
     };
 
- try {
+  try {
   const res = await axios.post(
     "https://cloth-backend-yhka.onrender.com/signup",
     payload
   );
 
-  const body = res?.data || {};
+  const body = res.data || {};
   const msg = (body.message || "").toLowerCase();
 
-  const successDetected =
-    body.success === true ||
-    body.status === true ||
-    msg.includes("success") ||
-    msg.includes("created") ||
-    msg.includes("registered");
+ const successDetected =
+  body.success === true ||
+  body.status === true ||
+  msg.includes("success") ||
+  msg.includes("created") ||
+  msg.includes("registered");
+
 
   if (successDetected) {
-    // Save token + firstName correctly (only if present)
-    if (body.token) localStorage.setItem("token", body.token);
-
-    // body.firstName might be in a different property (e.g. body.data.firstName).
-    // Try a few fallbacks:
-    const firstName =
-      body.firstName || body.data?.firstName || body.user?.firstName || "";
-
-    if (firstName) {
-      localStorage.setItem("firstName", firstName);
-      // update context so UI updates immediately
-      setFirstName(firstName);
-    }
+    // Save token + firstName correctly
+    localStorage.setItem("token", body.token);
+    localStorage.setItem("firstName", body.firstName);
 
     if (isMounted.current) {
       setErrorMsg("");
@@ -1124,7 +1112,7 @@ if (!gst) {
 
 // ---------------------- DASHBOARD COMPONENT ----------------------
 function Dashboard() {
-  const { firstName } = useAuth();
+  const [firstName, setFirstName] = useState("");
   const [file, setFile] = useState(null);
   const [subOrderNo, setSubOrderNo] = useState("");
   const [filterResult, setFilterResult] = useState(null);
@@ -1149,7 +1137,8 @@ function Dashboard() {
   const [profitPercent, setProfitPercent] = useState(0);
   const [dragActive, setDragActive] = useState(false);
   const [showFilteredView, setShowFilteredView] = useState(false);
-  const { setFirstName } = useAuth();
+  
+
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
 
