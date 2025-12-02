@@ -506,7 +506,7 @@ const states = [
   const [fieldPopups, setFieldPopups] = useState({}); // { fieldName: message }
   const [agree, setAgree] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
-
+  const { setFirstName } = useAuth(); 
   const navigate = useNavigate();
   const isMounted = useRef(true);
 
