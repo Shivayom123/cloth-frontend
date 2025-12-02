@@ -1,3 +1,5 @@
+// new excel.js dashboard navbar
+
 import React, {  useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -5,8 +7,6 @@ import { IoSearch } from "react-icons/io5";
 import { BrowserRouter as Router, Route, Routes ,Navigate} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"
-import { useContext } from "react";
-import { AuthContext } from "../AuthContext";
 
 import {
   LineChart,
@@ -505,7 +505,6 @@ const states = [
   const [fieldPopups, setFieldPopups] = useState({}); // { fieldName: message }
   const [agree, setAgree] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
-  const { setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const isMounted = useRef(true);
@@ -749,14 +748,8 @@ if (!gst) {
 
   if (successDetected) {
     // Save token + firstName correctly
-    const token = body.token;
-    const firstName = body.firstName || "";
-
-  // update context (this will re-render Navbar immediately)
-    setUser({ firstName, token });
     localStorage.setItem("token", body.token);
     localStorage.setItem("firstName", body.firstName);
-    window.dispatchEvent(new Event("storage"));
 
     if (isMounted.current) {
       setErrorMsg("");
@@ -1150,7 +1143,6 @@ function Dashboard() {
 
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
-  console.log(firstName)
 
   // Toggle menu when clicking Shivayom
   const handleToggle = () => {
@@ -1158,16 +1150,10 @@ function Dashboard() {
   };
 
 // add the first name in dashboard navbar 
-  useEffect(() => {
-  const updateName = () => {
-    setFirstName(localStorage.getItem("firstName") || "");
-  };
-
-  window.addEventListener("storage", updateName);
-
-  return () => window.removeEventListener("storage", updateName);
-}, []);
-
+useEffect(() => {
+    const name = localStorage.getItem("firstName");
+    setFirstName(name);
+  }, []);
 
 
   // Close menu when clicking outside
@@ -1336,7 +1322,7 @@ function Dashboard() {
       alert("Failed to process & store data");
     }
   };
-  const { user } = useContext(AuthContext);
+
   return (
     <div className="App">
       {/* Navbar */}
@@ -1392,10 +1378,7 @@ function Dashboard() {
       <div onClick={handleToggle} className="logo-container">
         <img src="/Ellipse 2.png" className="shivay" alt="logo" />
         <h1 className="heading1">
-        {user?.firstName && (
-       <span>Welcome, {user.firstName}</span>
-        )}
-
+        {firstName ? firstName : "Shivayom"}
         </h1>
       </div>
 
