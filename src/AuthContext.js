@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
+// src/AuthContext.js
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -17,4 +18,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+// convenience hook
 export const useAuth = () => useContext(AuthContext);
