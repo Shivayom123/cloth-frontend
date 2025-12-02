@@ -749,7 +749,9 @@ if (!gst) {
   if (successDetected) {
     // Save token + firstName correctly
     localStorage.setItem("token", body.token);
-    localStorage.setItem("firstName", body.firstName);
+    localStorage.setItem("firstName", response.firstName);
+    setFirstName(response.firstName);
+
 
     if (isMounted.current) {
       setErrorMsg("");
@@ -1114,7 +1116,7 @@ if (!gst) {
 
 // ---------------------- DASHBOARD COMPONENT ----------------------
 function Dashboard() {
-  const [firstName, setFirstName] = useState("");
+  const { firstName } = useAuth();
   const [file, setFile] = useState(null);
   const [subOrderNo, setSubOrderNo] = useState("");
   const [filterResult, setFilterResult] = useState(null);
@@ -1140,6 +1142,9 @@ function Dashboard() {
   const [dragActive, setDragActive] = useState(false);
   const [showFilteredView, setShowFilteredView] = useState(false);
   
+
+
+
 
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
