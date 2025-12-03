@@ -750,7 +750,8 @@ if (!gst) {
     // Save token + firstName correctly
     localStorage.setItem("token", body.token);
     localStorage.setItem("firstName", body.firstName);
-    window.dispatchEvent(new Event("userDataUpdated"));
+      window.__user = { firstName: body.firstName };
+      window.dispatchEvent(new Event("userChanged"));
 
     if (isMounted.current) {
       setErrorMsg("");
@@ -1115,7 +1116,19 @@ if (!gst) {
 
 // ---------------------- DASHBOARD COMPONENT ----------------------
 function Dashboard() {
-  const [firstName, setFirstName] = useState(localStorage.getItem("firstName") || "");
+    const [firstName, setFirstName] = useState(
+    window.__user?.firstName || ""
+  );
+
+  useEffect(() => {
+    const updateUser = () => {
+      setFirstName(window.__user.firstName || "");
+    };
+
+    window.addEventListener("userChanged", updateUser);
+
+    return () => window.removeEventListener("userChanged", updateUser);
+  }, []);
   const [file, setFile] = useState(null);
   const [subOrderNo, setSubOrderNo] = useState("");
   const [filterResult, setFilterResult] = useState(null);

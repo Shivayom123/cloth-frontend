@@ -6,6 +6,11 @@ import Footer from './Components/Footer';
 
 
 function App() {
+  // Restore user from localStorage when app first loads
+   window.__user = {
+  firstName: localStorage.getItem("firstName") || ""
+};
+
   return (
     <div>
     <Excel/>
