@@ -47,6 +47,7 @@
   outline: none;
   background: transparent;
   color: #fff;
+  min-width: 220px;
 }
 
 .footer-input::placeholder {
@@ -63,10 +64,12 @@
 /* Parent container of email + button */
 .footer-email-box {
   display: flex;
-  justify-content: center;  /* Centers horizontally */
+  justify-content: center;
   align-items: center;
-  gap: 10px;                /* space between input & button */
+  gap: 20px;
   width: 100%;
+  flex-wrap: wrap;  /* IMPORTANT: prevents merging */
+  margin-top: 20px;
 }
 
 /* Submit Button */
@@ -78,11 +81,9 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s ease;
-  width: 100px;
+  width: 120px;
   height: 40px;
   color: #b00087 !important;
-  display: inline-block;
-  text-align: center;
 }
 
 
