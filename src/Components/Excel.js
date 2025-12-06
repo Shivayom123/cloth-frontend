@@ -748,10 +748,17 @@ if (!gst) {
 
   if (successDetected) {
     // Save token + firstName correctly
-    localStorage.setItem("token", body.token);
-    localStorage.setItem("firstName", body.firstName);
-      window.__user = { firstName: body.firstName };
-      window.dispatchEvent(new Event("userChanged"));
+ localStorage.setItem("token", body.token);
+localStorage.setItem("firstName", body.firstName);
+
+// global user update
+window.__user = { firstName: body.firstName };
+
+// fire custom event
+setTimeout(() => {
+  window.dispatchEvent(new Event("userChanged"));
+}, 0);
+
 
     if (isMounted.current) {
       setErrorMsg("");
@@ -1116,19 +1123,24 @@ if (!gst) {
 
 // ---------------------- DASHBOARD COMPONENT ----------------------
 function Dashboard() {
-    const [firstName, setFirstName] = useState(
-    window.__user?.firstName || ""
-  );
+const [firstName, setFirstName] = useState(
+  localStorage.getItem("firstName") || ""
+);
 
-  useEffect(() => {
-    const updateUser = () => {
-      setFirstName(window.__user.firstName || "");
-    };
+useEffect(() => {
+  const updateUser = () => {
+    const name = localStorage.getItem("firstName");
+    setFirstName(name || "");
+  };
 
-    window.addEventListener("userChanged", updateUser);
+  window.addEventListener("userChanged", updateUser);
 
-    return () => window.removeEventListener("userChanged", updateUser);
-  }, []);
+  // run once on mount
+  updateUser();
+
+  return () => window.removeEventListener("userChanged", updateUser);
+}, []);
+
   const [file, setFile] = useState(null);
   const [subOrderNo, setSubOrderNo] = useState("");
   const [filterResult, setFilterResult] = useState(null);
